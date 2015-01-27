@@ -10,7 +10,7 @@ wb.add_worksheet(name: 'Прайс') do |sheet|
   sheet.add_row ["Прайс от #{@date.strftime('%d.%m.%Y')}"], style: title
   sheet.add_row [], height: 10
 
-  sheet.add_row ['Артикул', 'Производитель', 'Наименование', 'Полное наименование', 'Ваш заказ', 'Цена', 'Стоимость', 'Картинка'], style: bold, height: 15, widths: [10, 16, 50, 70, 10, 10, 10, 20] do |row|
+  sheet.add_row ['Артикул', 'Производитель', 'Наименование', 'Полное наименование', 'Ваш заказ', 'Цена', 'Стоимость', 'Картинка'], style: bold, height: 15, widths: [10, 16, 50, 70, 10, 10, 10, 30] do |row|
   end
 
   imgs = Hash[Image.order(:original_url).group{product_id}.map { |e| [e.product_id.to_i, e.original_url] }]
@@ -33,7 +33,7 @@ wb.add_worksheet(name: 'Прайс') do |sheet|
         end
       end
     end
-    sheet.auto_filter = "A3:G#{sheet.rows.last.index + 1}"
+    sheet.auto_filter = "A3:H#{sheet.rows.last.index + 1}"
     sheet.sheet_view.pane do |pane|
       pane.top_left_cell = "A4"
       pane.state = :frozen_split

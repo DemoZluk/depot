@@ -88,21 +88,28 @@ class OrdersController < ApplicationController
     end
   end
 
-  def add_by_item
-    if product = Product.find_by(item: params[:item])
+  def add_by_item item = nil, price = nil
+    if product = Product.find_by(item: item || li_params[:item])
       prod_attr = product.attributes.slice('id', 'price')
 
-      @order = Cart.find(params[:id]) unless controller_name == 'orders'
+      @order = Cart.find(params[:id]) unless controller_name == 'orders' 
 
       li = @order.line_items.find_or_initialize_by(product_id: prod_attr['id'])
-      li.price = prod_attr['price']
-      li.quantity += (params[:qt] || 1).to_i
+      puts li.attributes
+      li.price = (price || prod_attr['price']).to_f
+      li.quantity = (li_params[:qt] || 1).to_i
       if li.save
         redirect_to :back, notice: "#{product.title} добавлен в этот заказ"
       end
     else
-      redirect_to :back, notice: 'Товар с таким артикулом не найден'
+      redirect_to_back_or_default({notice: 'Товар с таким артикулом не найден'}, edit_order_url(@order))
     end
+  end
+
+  def add_shipping
+    authorize! :add_shipping, @order
+    shipping_item = 'tr'
+    add_by_item(shipping_item, params[:price])
   end
 
   # PATCH/PUT /orders/1
@@ -328,6 +335,10 @@ class OrdersController < ApplicationController
       @line_items = @order.line_items.page params[:page]
     rescue ActiveRecord::RecordNotFound
       redirect_to_back_or_default flash: {error: t('orders.show.no_such_order')}
+    end
+
+    def li_params
+      params.permit(:id, :item, :qt)
     end
 
     def check_if_empty

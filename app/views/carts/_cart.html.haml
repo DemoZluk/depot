@@ -22,10 +22,16 @@
             %span= number_to_currency @cart.discount_price
 
     .col-xs12.col-lg-4
-      .form-group
-        #add_new
-          %h4 Добавить товар по артикулу
-          = form_tag add_by_item_path(@cart.id), class: 'form-inline' do
-            = text_field_tag 'item', '', placeholder: 'Артикул', class: 'form-control'
-            = text_field_tag 'qt', '1', placeholder: 'Количество', class: 'form-control'
-            = submit_tag 'Добавить', class: 'btn btn-primary'
+      .container-fluid
+        .row
+          .form-group
+            #add_new
+              %h4 Добавить товар по артикулу
+              = form_tag add_by_item_path(@cart.id), class: 'form-inline' do
+                = text_field_tag 'item', nil, placeholder: 'Артикул', class: 'form-control'
+                = text_field_tag 'qt', '1', placeholder: 'Количество', class: 'form-control'
+                = submit_tag 'Добавить', class: 'btn btn-primary'
+        - if can? :add_shipping, @order
+          .row
+            .form-group
+              = render 'orders/add_shipping'

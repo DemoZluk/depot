@@ -1,6 +1,6 @@
 Fishmarkt::Application.routes.draw do
 
-  root 'store#index', as: 'store'
+  root 'store#index', as: 'store', via: ['GET', 'PUT']
 
   resources :menu_items, except: :index
 
@@ -51,6 +51,7 @@ Fishmarkt::Application.routes.draw do
     end
   end
   post 'add_by_item/:id' => 'orders#add_by_item', as: 'add_by_item'
+  post 'add_shipping/:id' => 'orders#add_shipping', as: 'add_shipping'
 
   delete 'multiple_orders' => 'orders#multiple_orders', action: 'delete'
 

@@ -51,6 +51,8 @@ class ProductsController < ApplicationController
           else
             render xlsx: 'download_price'
           end
+          
+          response.headers['Content-Disposition'] = 'attachment; filename="FishMarkt-pricelist.xlsx"'
         }
       end
     else

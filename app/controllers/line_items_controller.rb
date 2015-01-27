@@ -47,7 +47,11 @@ class LineItemsController < ApplicationController
   def update
     respond_to do |format|
       if @line_item.update(line_item_params)
-        format.html { redirect_to @line_item, notice: 'Line item was successfully updated.' }
+        if line_item_params[:quantity].to_i < 1
+          @line_item.destroy
+        end
+
+        format.html { redirect_to @line_item, notice: 'Позиция удалена.' }
         format.js {render partial: 'line_item_change_quantity'}
         format.json { head :no_content }
       else
