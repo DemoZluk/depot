@@ -1,0 +1,20 @@
+.info.container-fluid
+  %h3 Информация о заказчике
+  .row.well
+    .col-sm-4.bold ФИО
+    .col-sm-8= @order.name
+  .row.well
+    .col-sm-4.bold email
+    .col-sm-8= link_to @order.email, "mailto:#{@order.name}<#{@order.email}>"
+  .row.well
+    .col-sm-4.bold Телефон
+    .col-sm-8= @order.phone_number
+  .row.well
+    .col-sm-4.bold Адрес
+    .col-sm-8= @order.address.presence || "Самовывоз"
+  .row.well
+    .col-sm-4.bold Дата
+    .col-sm-8= @order.shipping_date
+  .row.well
+    .col-sm-4.bold Комментарий
+    .col-sm-8= @order.comment

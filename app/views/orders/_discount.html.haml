@@ -1,0 +1,8 @@
+- if (discount = @order.resulting_discount.to_i) > 0
+  .row.discount
+    .col-xs-12.col-lg-6
+      Ваша скидка:
+      %span= "#{discount}%"
+    .col-xs-12.col-lg-6.right
+      Итого cо скидкой:
+      %span#discount_price= number_to_currency @order.discount_price

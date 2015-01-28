@@ -1,0 +1,4 @@
+%h4 Добавить скидку
+= form_tag add_discount_order_path do
+  = text_field_tag 'dc', nil, placeholder: 'Скидка, %', class: 'form-control'
+  = submit_tag 'Добавить', class: 'btn btn-primary'

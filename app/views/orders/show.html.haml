@@ -11,36 +11,9 @@
   .row
     - if @order.token == params[:t] || can?(:show, @order)
       .col-lg-4.col-lg-push-8
-        .info.container-fluid
-          %h3 Информация о заказчике
-          .row.well
-            .col-sm-4.bold ФИО
-            .col-sm-8= @order.name
-          .row.well
-            .col-sm-4.bold email
-            .col-sm-8= link_to @order.email, "mailto:#{@order.name}<#{@order.email}>"
-          .row.well
-            .col-sm-4.bold Телефон
-            .col-sm-8= @order.phone_number
-          .row.well
-            .col-sm-4.bold Адрес
-            .col-sm-8= @order.address.presence || "Самовывоз"
-          .row.well
-            .col-sm-4.bold Дата
-            .col-sm-8= @order.shipping_date
-          .row.well
-            .col-sm-4.bold Комментарий
-            .col-sm-8= @order.comment
+        = render 'orders/client_info'
       .col-lg-8.col-lg-pull-4
-        = paginate @line_items if @line_items
         = render "carts/line_items"
-        .total
-          .col-xs-6.items
-            Всего товаров в заказе: 
-            %span= @order.line_items.count
-          .col-xs-6.right.grand-total
-            Итого: 
-            %span= number_to_currency @order.total_price
-        = paginate @line_items if @line_items
+        = render 'orders/discount'
     - else
       .info.text-danger У вас нет прав на просмотр информации об этом заказе

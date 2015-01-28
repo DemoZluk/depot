@@ -1,25 +1,29 @@
+- @order = @line_item.order if @line_item
 - if @user_cart && @current_cart && @current_cart != @user_cart
-  $('#content .items span').text("#{@user_cart.line_items.count}");
-  $('#content .grand-total > span').html("#{ j grand_total @user_cart }");
+  $('#content .items span').text("#{(@order || @user_cart).line_items.size}");
+  $('#content .grand-total > span').html("#{ j grand_total(@order || @user_cart) }");
 
 - else
   // Пересчитать общую сумму
-  $('#cart_block .grand_total').html("#{ j grand_total @current_cart }");
+  $('#cart_block .grand_total').html("#{ j grand_total(@order || @current_cart) }");
 
   // Количество позиций
-  $('#cart_panel .items span').text("#{@current_cart.line_items.count}");
+  $('#cart_panel .items span').text("#{(@order || @current_cart).line_items.size}");
+
+  // Пересчитать сумму со скидкой
+  $('#discount_price').html("#{ j number_to_currency((@order || @current_cart).discount_price) }");
 
   // Пересчитать счётчик товаров внизу
-  $('#item_counter span').stop().hide('fast', function() { $('#item_counter span').text("#{ j count_cart_elements @current_cart }").show('fast')});
+  $('#item_counter span').stop().hide('fast', function() { $('#item_counter span').text("#{ j count_cart_elements (@order || @current_cart) }").show('fast')});
 
   // Мигание изменённого товара в корзине
   $('.current_item').css({'background-color':'#CCC'}).animate({'background-color':'rgba(0, 0, 0, 0)'}, 1000);
 
   // Корзина внизу
-  $('#cart').html("#{ j render('shared/cart', cart: @current_cart) }");
+  $('#cart').html("#{ j render('shared/cart', cart: (@order || @current_cart)) }");
 
-  $('#content .items span').text("#{@current_cart.line_items.count}");
-  $('#content .grand-total > span').html("#{ j grand_total @current_cart }");
+  $('#content .items span').text("#{(@order || @current_cart).line_items.size}");
+  $('#content .grand-total > span').html("#{ j grand_total(@order || @current_cart) }");
 
 - if @line_item && @line_item.quantity > 0
   // Пересчитать количество товаров

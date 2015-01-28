@@ -15,6 +15,7 @@ class CartsController < ApplicationController
   # GET /carts/1
   # GET /carts/1.json
   def show
+    @discount = @cart.user.try(:discount).to_f
     @cart = @user_cart || @current_cart
     redirect_to cart_path, notice: 'Нет прав на просмотр этой корзины.' unless (current_user_owns?(@cart) || can?(:manage, Cart))
     @line_items = @cart.line_items.page(params[:page]).per(10)

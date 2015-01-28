@@ -1,8 +1,23 @@
-- @line_items.each do |li|
-  .product.line-item{id: li.product.permalink}
-    = render 'shared/image', product: li.product, size: 'sm r'
-    .description
-      %h5= link_to_product li.product
-      %p= li.product.long_name
-    .info_table
-      = render(partial: "#{(['edit', 'new'].include?(action_name) || controller_name == 'carts') ? 'carts' : 'orders'}/info_table", locals: {li: li})
+.row
+  = paginate @line_items if @line_items
+
+.row
+  - @line_items.each do |li|
+    .product.line-item{id: li.product.permalink}
+      = render 'shared/image', product: li.product, size: 'sm r'
+      .description
+        %h5= link_to_product li.product
+        %p= li.product.long_name
+      .info_table
+        = render(partial: "#{(['edit', 'new'].include?(action_name) || controller_name == 'carts') ? 'carts' : 'orders'}/info_table", locals: {li: li})
+
+.row.total
+  .col-xs-12.col-lg-6.items
+    Всего товаров:
+    %span= @line_items.size
+  .col-xs-12.col-lg-6.right.grand-total
+    Итого:
+    %span= number_to_currency (@order || @cart).total_price
+
+.row
+  = paginate @line_items if @line_items

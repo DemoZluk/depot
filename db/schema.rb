@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129090606) do
+ActiveRecord::Schema.define(version: 20150127142940) do
 
   create_table "articles", force: true do |t|
     t.string   "title"
@@ -72,9 +72,9 @@ ActiveRecord::Schema.define(version: 20141129090606) do
     t.integer  "cart_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quantity",   default: 1
+    t.integer  "quantity",              default: 1
     t.integer  "order_id"
-    t.float    "price"
+    t.float    "price",      limit: 24
   end
 
   add_index "line_items", ["cart_id"], name: "index_line_items_on_cart_id", using: :btree
@@ -113,6 +113,7 @@ ActiveRecord::Schema.define(version: 20141129090606) do
     t.integer  "state_id"
     t.datetime "confirmed_at"
     t.string   "invoice_id"
+    t.integer  "discount"
   end
 
   create_table "product_property_values", force: true do |t|
@@ -126,7 +127,7 @@ ActiveRecord::Schema.define(version: 20141129090606) do
     t.string   "title"
     t.string   "long_name"
     t.text     "description"
-    t.float    "price",            default: 0.0, null: false
+    t.float    "price",            limit: 24, default: 0.0, null: false
     t.string   "producer"
     t.string   "item_id"
     t.string   "group_id"
@@ -162,7 +163,7 @@ ActiveRecord::Schema.define(version: 20141129090606) do
 
   create_table "storages", force: true do |t|
     t.integer  "product_id"
-    t.float    "amount"
+    t.float    "amount",     limit: 24
     t.string   "unit"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -212,7 +213,7 @@ ActiveRecord::Schema.define(version: 20141129090606) do
     t.string "title"
     t.string "value_id"
     t.string "property_id"
-    t.float  "value"
+    t.float  "value",       limit: 24
   end
 
 end

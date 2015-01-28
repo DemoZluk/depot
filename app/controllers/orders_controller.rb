@@ -112,6 +112,16 @@ class OrdersController < ApplicationController
     add_by_item(shipping_item, params[:price])
   end
 
+  def add_discount
+    authorize! :add_discount, @order
+    discount = params[:dc].to_i
+    if @order.update(discount: discount)
+      redirect_to_back_or_default({notice: "Скидка #{discount}% добавлена к заказу."}, edit_order_url(@order))
+    else
+      redirect_to_back_or_default({notice: "Не удалось добавить скидку к заказу."})
+    end
+  end
+
   # PATCH/PUT /orders/1
   # PATCH/PUT /orders/1.json
   def update
@@ -333,6 +343,7 @@ class OrdersController < ApplicationController
       @controller = Rails.application.routes.recognize_path(request.referrer)[:controller]
       @order = Order.find(payment_params[:orderNumber] || params[:id] || order_params[:id])
       @line_items = @order.line_items.page params[:page]
+      @discount = @order.discount
     rescue ActiveRecord::RecordNotFound
       redirect_to_back_or_default flash: {error: t('orders.show.no_such_order')}
     end

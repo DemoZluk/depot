@@ -1,7 +1,8 @@
 #encoding: utf-8
 class Order < ActiveRecord::Base
   include Tokenable
-  has_many :line_items, dependent: :destroy
+  include LineItemable
+
   belongs_to :state
   belongs_to :user
 
@@ -50,14 +51,22 @@ class Order < ActiveRecord::Base
     state? == "Закрыт"
   end
 
-  def total_price
-    sum = line_items.to_a.sum(&:total_price)
-    if user && user.discount.in?(1..99)
-      sum * (1 - user.try(:discount).to_f/100)
-    else
-      sum
+  # def total_price
+  #   sum = line_items.to_a.sum(&:total_price).to_i
+  # end
+
+  def resulting_discount
+    dc = discount
+    if user && user.discount > 0
+      dc = [user.discount, dc].map(&:to_i).max
     end
+    dc.to_f
   end
+
+  # def discount_price
+  #   sum = total_price
+  #   (sum * (1 - resulting_discount/100)).to_i
+  # end
 
   def confirmed?
     confirmed_at.present? && state? == 'Подтверждён'
@@ -74,6 +83,4 @@ class Order < ActiveRecord::Base
   def active?
     state.active?
   end
-
-  alias_method :discount_price, :total_price
 end

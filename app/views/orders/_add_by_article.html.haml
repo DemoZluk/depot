@@ -1,0 +1,7 @@
+.form-group
+  #add_new
+    %h4 Добавить товар по артикулу
+    = form_tag add_by_item_order_path(@cart.id), class: 'form-inline' do
+      = text_field_tag 'item', nil, placeholder: 'Артикул', class: 'form-control'
+      = text_field_tag 'qt', '1', placeholder: 'Количество', class: 'form-control'
+      = submit_tag 'Добавить', class: 'btn btn-primary'

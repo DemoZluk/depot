@@ -1,4 +1,4 @@
 %h4 Добавить доставку
-= form_tag add_shipping_path do
+= form_tag add_shipping_order_path do
   = text_field_tag 'price', nil, placeholder: 'Стоимость', class: 'form-control'
   = submit_tag 'Добавить', class: 'btn btn-primary'

@@ -1,9 +1,10 @@
 class Cart < ActiveRecord::Base
-  has_many :line_items, dependent: :destroy
+  include LineItemable
+
   belongs_to :user
 
   scope :not_empty, -> { joins{line_items}.group{id} }
-  
+
   def add_product(product_id, amount)
     current_item = line_items.find_by(product_id: product_id)
     if current_item
@@ -13,14 +14,6 @@ class Cart < ActiveRecord::Base
       current_item.price = Product.find(product_id).price
     end
     current_item
-  end
-
-  def total_price
-    line_items.to_a.sum { |item| item.total_price }
-  end
-
-  def discount_price
-    total_price * (1 - user.discount.to_f/100)
   end
 
   def self.destroy_abandoned_carts(time = 1.day)

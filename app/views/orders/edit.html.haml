@@ -10,7 +10,24 @@
 
 .tab-content.container-fluid
   .in.active.row.container-fluid#edit
-    = render 'carts/cart'
+    .row
+      .col-xs12.col-lg-8
+        = render "carts/line_items"
+        = render 'orders/discount'
+
+      .col-xs12.col-lg-4
+        .container-fluid
+          .row
+            = render 'orders/add_by_article'
+          - if can? :add_shipping, @order
+            .row
+              .form-group
+                = render 'orders/add_shipping'
+          - if can? :add_discount, @order
+            .row
+              .form-group
+                = render 'orders/add_discount'
+
 
   .row#info
     .order= render 'form'

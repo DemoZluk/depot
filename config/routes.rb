@@ -12,6 +12,7 @@ Fishmarkt::Application.routes.draw do
 
   resources :products, except: [:new, :create, :destroy] do
     # get :who_bought, on: :member
+    get :edit, on: :member
     get :vote, on: :member
   end
 
@@ -48,10 +49,11 @@ Fishmarkt::Application.routes.draw do
       get 'close'
       get 'print'
       match 'print_preview', via: [:get, :post]
+      post 'add_by_item'
+      post 'add_shipping'
+      post 'add_discount'
     end
   end
-  post 'add_by_item/:id' => 'orders#add_by_item', as: 'add_by_item'
-  post 'add_shipping/:id' => 'orders#add_shipping', as: 'add_shipping'
 
   delete 'multiple_orders' => 'orders#multiple_orders', action: 'delete'
 
