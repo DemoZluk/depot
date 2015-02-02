@@ -246,8 +246,8 @@ module ProductModule
       # FileUtils.rm_rf(Dir.glob(prefix + path + '*'))
 
       images.each_with_index do |img, i|
-        if new_image img.url, id, i
-          puts "Image for #{title} generated." unless silent
+        if new_image(img.url, id, i) && !silent
+          puts "Image for #{title} generated."
         end
         # if File.exists?(prefix + '/images/' + img.url)
         #   image = MiniMagick::Image.open prefix + '/images/' + img.url, ext
