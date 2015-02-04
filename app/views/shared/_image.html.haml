@@ -1,3 +1,6 @@
 - size ||= 'sm-sq'
 - img_url = size.match('sm') ? product.thumb : product.medium
-.product-image{class: "img #{size}"}= link_to image_tag(img_url, alt: product.title, title: product.title, itemprop: 'image'), product.image_url
+.product-image{class: "img #{size}"}
+  = link_to image_tag(img_url, alt: product.title, title: product.title, itemprop: 'image'), product.image_url
+  - if @group && @group.permalink.match('iskusstvennye-rasteniya')
+    = render 'shared/plant_size', product: product

@@ -87,8 +87,11 @@ mark {
     -moz-box-sizing: border-box;
   }
 
-  .manufacturer {
-    
+  .plant_size {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    width: 30px;
   }
 
   .add_to_cart_wrapper {
@@ -108,7 +111,6 @@ mark {
   margin: 6px 0px 15px;
   white-space: nowrap;
 }
-
 .rating {
   display: inline-block;
   height: $vote_img_size;
