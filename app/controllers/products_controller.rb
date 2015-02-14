@@ -55,7 +55,7 @@ class ProductsController < ApplicationController
         }
       end
     else
-      redirect_to store_path, notice: 'Для скачивания прайса необходимо зарегистрироваться.'
+      redirect_to store_path, flash: {error: "Для скачивания прайса необходимо #{view_context.link_to 'войти', login_url} или #{view_context.link_to 'зарегистрироваться', sign_up_url}.".html_safe}
     end
   end
 

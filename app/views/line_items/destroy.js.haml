@@ -1,8 +1,8 @@
-// Перерисовать корзину
+-# Перерисовать корзину
 $('#cart_panel #cart').html("#{ j render('shared/cart', cart: @cart) }");
 
-// Перерисовать общую сумму внизу
+-# Перерисовать общую сумму внизу
 $('.grand_total').html("#{ j render('shared/grand_total') }");
 
-// Перерисовать счётчик товаров внизу
+-# Перерисовать счётчик товаров внизу
 $('#item_counter span').stop().hide('fast', function() { $('#item_counter span').html("#{ j render('shared/counter') }").show('fast')});

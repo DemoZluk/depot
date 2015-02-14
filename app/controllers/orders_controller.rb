@@ -48,19 +48,16 @@ class OrdersController < ApplicationController
   # POST /orders
   # POST /orders.json
   def create
-    params = order_params
-    if user_signed_in?
-      if params[:remember]
-        info = Information.find_or_create_by(user_id: current_user.id)
-        info.update order_params.slice(*Information.column_names)
-      end
+    if user_signed_in? && params[:remember]
+      info = Information.find_or_create_by(user_id: current_user.id)
+      info.update order_params.slice(*Information.column_names)
     end
 
     if @cart.line_items.empty?
       redirect_to store_url, flash: {warning: t('orders.show.order_is_empty')} and return
     end
 
-    @order = Order.new(params)
+    @order = Order.new(order_params)
     @order.user_id = @cart.user_id
     respond_to do |format|
       if @order.save && @order.add_line_items_from_cart(@cart)
@@ -115,7 +112,7 @@ class OrdersController < ApplicationController
   def add_discount
     authorize! :add_discount, @order
     discount = params[:dc].to_i
-    if @order.update(discount: discount)
+    if @order.update_attribute(:discount, discount)
       redirect_to_back_or_default({notice: "Скидка #{discount}% добавлена к заказу."}, edit_order_url(@order))
     else
       redirect_to_back_or_default({notice: "Не удалось добавить скидку к заказу."})

@@ -107,7 +107,6 @@ $(document).on 'ajax:beforeSend', '#side', ->
   $('#loading').fadeIn(10)
 
 $(document).on 'ajax:error', (xhr, error) ->
-  #console.log error
   #$('input.primary_button').attr('disabled', true)
   $('#error').html('Внимание! Произошла ошибка! Перезагрузите сраницу. Если это не в первый раз, <a href="/report_error">сообщите о ней</a> администратору!').show('blind')
 
@@ -143,7 +142,9 @@ $(document).on 'ajax:beforeSend', '#filters form, .control form', (event, xhr, s
     if (e.value == '') then null else e
   filters = $.param arr
   settings.url = this.action + '?' + filters
-  history.pushState({turbolinks: true, url: settings.url}, document.title, settings.url)
+
+  if (typeof history.pushState != 'undefined')
+    history.pushState({turbolinks: true, url: settings.url}, document.title, settings.url)
 
   # $('#price-slider').slider({
   #   range: true,

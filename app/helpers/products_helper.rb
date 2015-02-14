@@ -5,16 +5,16 @@ module ProductsHelper
   end
 
   def plant_size_url product
-    height = product.values.find_by(property_id: 16).value.to_i
-    case height
-    when 0..10
-      url = 'plant-size-1.png'
-    when 11..20
-      url = 'plant-size-2.png'
-    when 21..30
-      url = 'plant-size-3.png'
+    height = product.values.find_by(property_id: 16).value.to_i.abs
+    url = case height
+    when 0...10
+      'plant-size-1.png'
+    when 10...20
+      'plant-size-2.png'
+    when 20..30
+      'plant-size-3.png'
     else
-      url = 'plant-size-4.png'
+      'plant-size-4.png'
     end
   end
 end

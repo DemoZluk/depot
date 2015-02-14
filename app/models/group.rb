@@ -17,6 +17,10 @@ class Group < ActiveRecord::Base
     permalink
   end
 
+  def self.products
+    Product.where(id: id)
+  end
+
   # def properties
   #   products.select('properties.*').joins{properties}.uniq
   # end
@@ -24,6 +28,7 @@ class Group < ActiveRecord::Base
   # If group has any children, join products, groups and their parents
   def all_products(order = 'products.title')
     ids = [id] << children.pluck(:id)
+    blah = 'blahS'
     Product.where{group_id >> ids}.order(order)
   end
 

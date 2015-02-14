@@ -1,5 +1,6 @@
 %li
-  - c = "btn-gray#{(options == request.path) ? ' current-page' : nil}"
+  - c = "btn-gray"
+  - c << ' current-page' if options == request.path
   - if options.present? && options != request.path
     = link_to(name, options, html_options.merge(class: c))
   - else

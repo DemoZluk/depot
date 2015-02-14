@@ -23,6 +23,8 @@ class Ability
       can [:read, :download_price], Product, Product.with_price do |p|
         p.price > 0
       end
+
+      #can :read, Group, Group.joins{children.products}.where{products.price > 0}.uniq.pluck(:title)
       can [:read, :update, :destroy, :clear], Cart, user_id: user.id
       can [:create, :show, :update, :cancel, :print], Order, email: user.email
       can [:read, :create, :update, :decrement, :increment, :destroy], LineItem

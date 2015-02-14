@@ -1,15 +1,15 @@
 %ul.parent
-  -# application_helper: menu_item(path = {}, name = nil, html_options = nil, &block)
+  -# application_helper: menu_item(path = {}, name = nil, html_options = nil, condition)
   - if user_signed_in? && current_user.role?.any?
     %li= render 'shared/control_panel'
   %li= link_to('Каталог', store_path, class: 'btn-gray')
-  = menu_item(user_signed_in?, 'Скачать прайс', download_price_path)
+  = menu_item('Скачать прайс', download_price_path)
   - MenuItem.all_published.primary.each do |item|
     %li
-      %ul= menu_item(item.published?, item.title, item.permalink)
+      %ul= menu_item(item.title, item.permalink, item.published?)
       - if item.children.any?
         %ul.child
           - item.children.each do |child|
-            = menu_item(true, child.title, child.permalink)
+            = menu_item(child.title, child.permalink)
   %li= link_to('Гарантия', '/warranty', class: 'btn-gray')
   %li= link_to('Отзывы и пожелания', '/feedback', class: 'btn-gray')

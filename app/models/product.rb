@@ -58,11 +58,11 @@ class Product < ActiveRecord::Base
   end
 
   def self.min_price
-    minimum(:price).floor
+    minimum(:price).to_f.floor
   end
 
   def self.max_price
-    maximum(:price).ceil
+    maximum(:price).to_f.ceil
   end
 
   def avg_rating

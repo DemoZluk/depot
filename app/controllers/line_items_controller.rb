@@ -33,7 +33,7 @@ class LineItemsController < ApplicationController
     respond_to do |format|
       if @line_item.save
         format.html { redirect_to store_url }
-        format.js { @current_item = @line_item; render partial: 'line_item_change_quantity'}
+        format.js { @current_item = @line_item; render partial: 'line_item_change_quantity' }
         format.json { render action: 'show', status: :created, location: @line_item }
       else
         format.html { render action: 'new' }
@@ -52,7 +52,7 @@ class LineItemsController < ApplicationController
         end
 
         format.html { redirect_to @line_item, notice: 'Позиция удалена.' }
-        format.js {render partial: 'line_item_change_quantity'}
+        format.js { render partial: 'line_item_change_quantity' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -74,7 +74,7 @@ class LineItemsController < ApplicationController
           redirect_to store_url
         end
       end
-      format.js {@current_item = @line_item; render partial: 'line_item_change_quantity'}
+      format.js { @current_item = @line_item; render partial: 'line_item_change_quantity' }
       format.json { head :no_content }
     end
   end
@@ -89,8 +89,8 @@ class LineItemsController < ApplicationController
 
     if @line_item.save
       respond_to do |format|
-        format.html {redirect_to cart_path(session[:cart_id])}
-        format.js {@current_item = @line_item; render partial: 'line_item_change_quantity'}
+        format.html { redirect_to cart_path(session[:cart_id]) }
+        format.js { @current_item = @line_item; render partial: 'line_item_change_quantity' }
         format.json { head :no_content }
       end
     else
@@ -108,7 +108,7 @@ class LineItemsController < ApplicationController
     if @line_item.save
       respond_to do |format|
         format.html {redirect_to cart_path(session[:cart_id])}
-        format.js {@current_item = @line_item; render partial: 'line_item_change_quantity'}
+        format.js { @current_item = @line_item; render partial: 'line_item_change_quantity' }
         format.json { head :no_content }
       end
     else

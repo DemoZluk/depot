@@ -29,12 +29,14 @@ input[type='checkbox'], input[type='checkbox']~label {
     height: 135px !important;
     width: 135px;
     display: inline-block;
+    position: relative;
   }
 
   &.md-sq, &.md-sq a img {
     height: 300px;
     width: 300px;
     display: inline-block;
+    position: relative;
   }
 
   &.r {
@@ -46,6 +48,7 @@ input[type='checkbox'], input[type='checkbox']~label {
     width: 100%;
     display: inline-block;
     vertical-align: top;
+    position: relative;
   }
 }
 

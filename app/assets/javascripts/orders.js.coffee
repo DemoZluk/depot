@@ -45,7 +45,8 @@ $(document).on 'click', '.nav-tabs a', (e) ->
   $(this).tab('show')
   loc = this.href
   hash = '#' + loc.split('#')[1]
-  history.pushState({hash: hash}, '', loc)
+  if (typeof history.pushState != 'undefined')
+    history.pushState({hash: hash}, '', loc)
 
 $(document).on 'click', '.next', (e) ->
   e.preventDefault
